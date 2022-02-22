@@ -1,2 +1,2 @@
 https://dream-town.vercel.app/
-run lcally: npm run dev
+run locally: npm run dev
