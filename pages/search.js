@@ -1,19 +1,22 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import SearchFilters from "../components/SearchFilters";
 import Image from "next/image";
 import { Flex, Box, Text, Icon } from "@chakra-ui/react";
 import { BsFilter } from "react-icons/bs";
-import { baseUrl, fetchApi } from "../utils/fetchApi";
-import Property from "../components/Property";
 
-const search = ({ properties }) => {
+import Property from "../components/Property";
+import SearchFilters from "../components/SearchFilters";
+import { baseUrl, fetchApi } from "../utils/fetchApi";
+import noresult from "../assets/images/noresult.svg";
+
+const Search = ({ properties }) => {
   const [searchFilters, setSearchFilters] = useState(false);
   const router = useRouter();
 
   return (
     <Box>
       <Flex
+        onClick={() => setSearchFilters(!searchFilters)}
         cursor="pointer"
         bg="gray.100"
         borderBottom="1px"
@@ -23,12 +26,10 @@ const search = ({ properties }) => {
         fontSize="lg"
         justifyContent="center"
         alignItems="center"
-        onClick={() => setSearchFilters(!searchFilters)}
       >
         <Text>Search Property By Filters</Text>
         <Icon paddingLeft="2" w="7" as={BsFilter} />
       </Flex>
-
       {searchFilters && <SearchFilters />}
       <Text fontSize="2xl" p="4" fontWeight="bold">
         Properties {router.query.purpose}
@@ -38,7 +39,7 @@ const search = ({ properties }) => {
           <Property property={property} key={property.id} />
         ))}
       </Flex>
-      {/* {properties.length === 0 && (
+      {properties.length === 0 && (
         <Flex
           justifyContent="center"
           alignItems="center"
@@ -46,16 +47,16 @@ const search = ({ properties }) => {
           marginTop="5"
           marginBottom="5"
         >
-          <Image src={noresult} alt="search" />
+          <Image src={noresult} />
           <Text fontSize="xl" marginTop="3">
             No Result Found.
           </Text>
         </Flex>
-      )} */}
+      )}
     </Box>
   );
 };
-export default search;
+
 export async function getServerSideProps({ query }) {
   const purpose = query.purpose || "for-rent";
   const rentFrequency = query.rentFrequency || "yearly";
@@ -78,3 +79,5 @@ export async function getServerSideProps({ query }) {
     },
   };
 }
+
+export default Search;
