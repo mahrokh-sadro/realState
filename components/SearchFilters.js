@@ -16,7 +16,17 @@ import { filterData, getFilterValues } from "../utils/filterData";
 
 const SearchFilters = () => {
   const [filters, setFilters] = useState(filterData);
-  const searchProperties = (filterValues) => {};
+  const router = useRouter();
+
+  const searchProperties = (filterValues) => {
+    const path = router.pathname;
+    const { query } = router;
+    const values = getFilterValues(filterValues);
+    values.forEach((item) => {
+      query[item.name] = item.value;
+    });
+    router.push({ pathname: path, query: query });
+  };
   console.log(filters);
   return (
     <Flex bg="gray.100" p="4" justifyContent="center" flexWrap="wrap">
