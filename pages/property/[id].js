@@ -48,7 +48,7 @@ const PropertyDetails = ({
         color="blue.400"
       >
         {rooms}
-        <FaBed /> | {baths} <FaBath /> | {area} sqft <BsGridFill />
+        <FaBed /> | {baths} <FaBath /> | {Math.round(area)} sqft <BsGridFill />
       </Flex>
     </Box>
     <Box marginTop="2">
